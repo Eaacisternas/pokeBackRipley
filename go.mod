@@ -1,3 +1,5 @@
 module github.com/Eaacisternas/pokeBackRipley
+
 go 1.13
-require()
+
+require go.mongodb.org/mongo-driver v1.10.1 // indirect

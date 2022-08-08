@@ -1,9 +1,8 @@
 package pokemonservices
 
 import (
-	pokemonrepository "pokeBackRipley/repositories/pokemon.repository"
-
-	"../../models"
+	models "github.com/Eaacisternas/pokeBackRipley/models"
+	pokemonrepository "github.com/Eaacisternas/pokeBackRipley/repositories/pokemon.repository"
 )
 
 func Create(pokemon models.Pokemon) error {
