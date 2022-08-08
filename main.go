@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"github.com/Eaacisternas/pokeBackRipley/libs"
+)
 
 func main() {
-	fmt.Println("Nuevo proyecto Go")
+	libs.S3.Region = "us-east-1"
+	libs.S3.NewSession(libs.S3.Region)
+	libs.S3.Ls()
 }

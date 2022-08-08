@@ -9,4 +9,4 @@ type Pokemon struct {
 }
 
 //pokemons Lista de los pokemones
-type Pokemons []Pokemon
+type Pokemons []*Pokemon
