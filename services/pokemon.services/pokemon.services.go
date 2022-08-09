@@ -63,7 +63,7 @@ func ListarPokemon(region string) error {
 /*CrearArchivo, Crea un archivo csv en documents, con la data extraida desde la base de datos*/
 func CrearArchivo(pokemon models.Pokemon, region string) error {
 	filename := "../../documents/" + region + ".csv"
-	linea := fmt.Sprint(pokemon.Orden) + ";" + string(pokemon.Name) + fmt.Sprint(pokemon.Weight) + ";" + fmt.Sprint(pokemon.Height)
+	linea := fmt.Sprint(pokemon.Orden) + ";" + string(pokemon.Name) + ";" + fmt.Sprint(pokemon.Weight) + ";" + fmt.Sprint(pokemon.Height)
 	if !archivoExiste(filename) {
 		archivo, err := os.Create(filename)
 		if err != nil {
@@ -78,7 +78,7 @@ func CrearArchivo(pokemon models.Pokemon, region string) error {
 			fmt.Println("Hubo un error al modificar el archivo")
 			return nil
 		}
-		_, err = archivo.WriteString(linea)
+		_, err = archivo.WriteString("\n" + linea)
 		if err != nil {
 			fmt.Println("Hubo un error al ingresar el texto en el archivo")
 		}
