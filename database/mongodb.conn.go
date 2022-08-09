@@ -1,9 +1,6 @@
 package database
 
 import (
-
-	// "github.com/eaacisternas/pokeBack/middlewears"
-	// "github.com/eaacisternas/pokeBack/routers"
 	"context"
 	"log"
 	"time"
@@ -16,7 +13,7 @@ import (
 var MongoCN = ConectarBD()
 var uri = "mongodb+srv://eduardoAguirre:Abril201118@cluster0.ep7djah.mongodb.net/?retryWrites=true&w=majority"
 
-// /*ConerctarBD es la función que me permite conectar la BD*/
+/*ConerctarBD es la función que me permite conectar la BD*/
 func ConectarBD() *mongo.Client {
 	var clientOptions = options.Client().ApplyURI(uri)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -42,6 +39,8 @@ func ValConnection() int {
 	}
 	return 1
 }
+
+/*GetCollection obtiene la coleccion de datos desde la base de datos*/
 func GetCollection(collection string) *mongo.Collection {
 	database := "pokeBack"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))

@@ -11,6 +11,7 @@ import (
 	"github.com/rs/cors"
 )
 
+/*Manejadores evalua la accion sobre la peticion http, y envia deacuerdo al Verbo y los parametros que este tenga.*/
 func Manejadores() {
 	router := mux.NewRouter()
 	router.HandleFunc("/procesarPokemon", middlew.ValidacionDB(routers.RegistrarPokemon)).Methods("POST")

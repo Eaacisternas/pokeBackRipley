@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	models "github.com/Eaacisternas/pokeBackRipley/models"
+	pokemonrepository "github.com/Eaacisternas/pokeBackRipley/repositories/pokemon.repository"
 	pokemonservices "github.com/Eaacisternas/pokeBackRipley/services/pokemon.services"
 )
 
@@ -26,15 +27,9 @@ func TestCreate(t *testing.T) {
 
 /*TestRead, test unitario para Read de pokemonservice*/
 func TestRead(t *testing.T) {
-	pokemons, err := pokemonservices.Read()
+	err := pokemonservices.Read()
 	if err != nil {
 		t.Error("La prueba de persistencia de los datos de pokemon ha fallado")
-		t.Fail()
-	} else {
-		t.Log("La prueba finalizo con exito")
-	}
-	if len(pokemons) == 0 {
-		t.Error("La consulta no ha traido datos")
 		t.Fail()
 	} else {
 		t.Log("La prueba finalizo con exito")
@@ -43,7 +38,7 @@ func TestRead(t *testing.T) {
 
 /*TestListarPokemon, test unitario para ListarPokemon de pokemonservice*/
 func TestListarPokemon(t *testing.T) {
-	err := pokemonservices.ListarPokemon("kanto")
+	err := pokemonservices.ListarPokemon()
 	if err != nil {
 		t.Error("La prueba de persistencia de los datos de pokemon por region ha fallado ")
 		t.Fail()
@@ -60,7 +55,7 @@ func TestCrearArchivo(t *testing.T) {
 		Weight: 67,
 		Height: 7,
 	}
-	err := pokemonservices.CrearArchivo(pokemon, "kanto")
+	err := pokemonrepository.CrearArchivo(pokemon)
 	if err != nil {
 		t.Error("La prueba de crear un archivo ha fallado")
 		t.Fail()
