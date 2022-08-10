@@ -29,7 +29,7 @@ func TestCreate(t *testing.T) {
 func TestRead(t *testing.T) {
 	err := pokemonservices.Read()
 	if err != nil {
-		t.Error("La prueba de persistencia de los datos de pokemon ha fallado")
+		t.Error("La prueba de persistencia de los datos de pokemon ha fallado" + err.Error())
 		t.Fail()
 	} else {
 		t.Log("La prueba finalizo con exito")
@@ -37,15 +37,7 @@ func TestRead(t *testing.T) {
 }
 
 /*TestListarPokemon, test unitario para ListarPokemon de pokemonservice*/
-func TestListarPokemon(t *testing.T) {
-	err := pokemonservices.ListarPokemon()
-	if err != nil {
-		t.Error("La prueba de persistencia de los datos de pokemon por region ha fallado ")
-		t.Fail()
-	} else {
-		t.Log("La prueba finalizo con exito")
-	}
-}
+// s
 
 /*TestCrearArchivo, test unitario para CrearArchivo de pokemonservice*/
 func TestCrearArchivo(t *testing.T) {

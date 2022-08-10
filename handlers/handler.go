@@ -19,7 +19,7 @@ func Manejadores() {
 	if PORT == "" {
 		PORT = "8080"
 	}
+	router.HandleFunc("/listarPokemon", routers.ListarPokemon).Methods("GET")
 	handler := cors.AllowAll().Handler(router)
 	log.Fatal(http.ListenAndServe(":"+PORT, handler))
-
 }

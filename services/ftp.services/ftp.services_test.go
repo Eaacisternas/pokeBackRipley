@@ -8,8 +8,7 @@ import (
 
 /*TestCreate, test unitario para SubirArchivo de ftpservice*/
 func TestSubirArchivo(t *testing.T) {
-
-	err := ftpservices.SubirArchivo("kanto.csv")
+	err := ftpservices.SubirArchivo()
 	if err != nil {
 		t.Error("La prueba de subir el archivo ha fallado")
 		t.Fail()

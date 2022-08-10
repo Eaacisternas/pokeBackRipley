@@ -4,9 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
-	"os"
 
 	models "github.com/Eaacisternas/pokeBackRipley/models"
 	pokemonrepository "github.com/Eaacisternas/pokeBackRipley/repositories/pokemon.repository"
@@ -31,32 +29,26 @@ func Read() error {
 }
 
 /*ListarPokemon, Lee la pokeapi(https://pokeapi.co/) y procesa los pokemons deacuerdo a lo requerido*/
-func ListarPokemon() error {
+func ListarPokemon(w http.ResponseWriter, r *http.Request) error {
 	var pokemonObject models.Pokemon
-	response, err := http.Get("http://pokeapi.co/api/v2/pokedex/kanto")
-	if err != nil {
-		fmt.Print(err.Error())
-		os.Exit(1)
-	}
-	responseData, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	var responseObject models.Region
-	json.Unmarshal(responseData, &responseObject)
-	for i := 1; i <= len(responseObject.Pokemon); i++ {
-		response, err = http.Get("http://pokeapi.co/api/v2/pokemon/" + fmt.Sprint(i))
+	var pokemons models.Pokemons
+	for i := 1; i <= 10; i++ {
+		response, err := http.Get("http://pokeapi.co/api/v2/pokemon/" + fmt.Sprint(i))
 		if err != nil {
-			fmt.Print(err.Error())
-			os.Exit(1)
+			return err
 		}
-		responseData, err = io.ReadAll(response.Body)
+		responseData, err := io.ReadAll(response.Body)
 		if err != nil {
-			log.Fatal(err.Error())
+			return err
 		}
 		json.Unmarshal(responseData, &pokemonObject)
-		fmt.Println(pokemonObject)
+
+		pokemons = append(pokemons, &pokemonObject)
 		Create(pokemonObject)
 	}
+	w.Header().Set("contect-type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(pokemons)
+
 	return nil
 }

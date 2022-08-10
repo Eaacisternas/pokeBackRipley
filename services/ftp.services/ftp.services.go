@@ -9,7 +9,7 @@ import (
 )
 
 /* sube los archivos por ftp a un cliente asignado*/
-func SubirArchivo(name string) error {
+func SubirArchivo() error {
 	config := goftp.Config{
 		User:               "PruebaBancoRipley@appgrade.cl",
 		Password:           "Abril201118",
@@ -23,12 +23,12 @@ func SubirArchivo(name string) error {
 		fmt.Println("fallo" + err.Error())
 		return err
 	}
-	bigFile, err := os.Open(name)
+	bigFile, err := os.Open("../pokemon.services/kanto.csv")
 	if err != nil {
 		return err
 	}
 
-	err = client.Store(name, bigFile)
+	err = client.Store("kanto.csv", bigFile)
 	if err != nil {
 		return err
 	}
