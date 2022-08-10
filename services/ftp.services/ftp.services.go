@@ -23,7 +23,8 @@ func SubirArchivo() error {
 		fmt.Println("fallo" + err.Error())
 		return err
 	}
-	bigFile, err := os.Open("../pokemon.services/kanto.csv")
+
+	bigFile, err := os.Open("./documents/kanto.csv")
 	if err != nil {
 		return err
 	}

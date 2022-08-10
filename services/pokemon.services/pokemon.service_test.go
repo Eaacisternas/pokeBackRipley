@@ -26,15 +26,15 @@ func TestCreate(t *testing.T) {
 }
 
 /*TestRead, test unitario para Read de pokemonservice*/
-func TestRead(t *testing.T) {
-	err := pokemonservices.Read()
-	if err != nil {
-		t.Error("La prueba de persistencia de los datos de pokemon ha fallado" + err.Error())
-		t.Fail()
-	} else {
-		t.Log("La prueba finalizo con exito")
-	}
-}
+// func TestRead(t *testing.T) {
+// 	err := pokemonservices.Read()
+// 	if err != nil {
+// 		t.Error("La prueba de persistencia de los datos de pokemon ha fallado" + err.Error())
+// 		t.Fail()
+// 	} else {
+// 		t.Log("La prueba finalizo con exito")
+// 	}
+// }
 
 /*TestListarPokemon, test unitario para ListarPokemon de pokemonservice*/
 // s

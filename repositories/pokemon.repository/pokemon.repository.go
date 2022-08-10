@@ -3,6 +3,7 @@ package pokemonrepository
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 
 	database "github.com/Eaacisternas/pokeBackRipley/database"
@@ -26,7 +27,7 @@ func Create(pokemon models.Pokemon) error {
 }
 
 /*Read, lee los registros en la base de datos*/
-func Read() error {
+func Read(w http.ResponseWriter, r *http.Request) error {
 	filter := bson.D{}
 	cur, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -40,12 +41,19 @@ func Read() error {
 		}
 		CrearArchivo(pokemon)
 	}
-	return ftpservices.SubirArchivo()
+	err = ftpservices.SubirArchivo()
+	if err != nil {
+		return err
+	}
+
+	w.Header().Set("contect-type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	return nil
 }
 
 /*CrearArchivo, Crea un archivo csv en documents, con la data extraida desde la base de datos*/
 func CrearArchivo(pokemon models.Pokemon) error {
-	filename := "kanto.csv"
+	filename := "./documents/kanto.csv"
 	linea := fmt.Sprint(pokemon.Orden) + ";" + string(pokemon.Name) + ";" + fmt.Sprint(pokemon.Weight) + ";" + fmt.Sprint(pokemon.Height) + ";" + pokemon.Sprites.Front_default
 	for j := 0; j < len(pokemon.Types); j++ {
 		linea = linea + ";" + string(pokemon.Types[j].Tipo.Name)
@@ -57,7 +65,6 @@ func CrearArchivo(pokemon models.Pokemon) error {
 			return err
 		}
 		fmt.Fprintln(archivo, linea)
-		archivo.Close()
 	} else {
 		archivo, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND, 0644)
 		if err != nil {

@@ -20,8 +20,8 @@ func Create(pokemon models.Pokemon) error {
 }
 
 /*Read, invoca al repositorio que lee los registros en la base de datos*/
-func Read() error {
-	err := pokemonrepository.Read()
+func Read(w http.ResponseWriter, r *http.Request) error {
+	err := pokemonrepository.Read(w, r)
 	if err != nil {
 		return err
 	}
@@ -30,9 +30,9 @@ func Read() error {
 
 /*ListarPokemon, Lee la pokeapi(https://pokeapi.co/) y procesa los pokemons deacuerdo a lo requerido*/
 func ListarPokemon(w http.ResponseWriter, r *http.Request) error {
-	var pokemonObject models.Pokemon
-	var pokemons models.Pokemons
-	for i := 1; i <= 10; i++ {
+	var pokemon models.Pokemons
+	for i := 1; i <= 20; i++ {
+		var pokemonObject models.Pokemon
 		response, err := http.Get("http://pokeapi.co/api/v2/pokemon/" + fmt.Sprint(i))
 		if err != nil {
 			return err
@@ -42,13 +42,14 @@ func ListarPokemon(w http.ResponseWriter, r *http.Request) error {
 			return err
 		}
 		json.Unmarshal(responseData, &pokemonObject)
-
-		pokemons = append(pokemons, &pokemonObject)
+		fmt.Println(pokemonObject)
+		fmt.Println(pokemon)
+		pokemon = append(pokemon, &pokemonObject)
 		Create(pokemonObject)
 	}
 	w.Header().Set("contect-type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(pokemons)
+	json.NewEncoder(w).Encode(pokemon)
 
 	return nil
 }
