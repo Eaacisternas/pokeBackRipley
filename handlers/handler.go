@@ -17,7 +17,7 @@ func Manejadores() {
 	router.HandleFunc("/procesarPokemon", middlew.ValidacionDB(routers.RegistrarPokemon)).Methods("POST")
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
-		PORT = "8080"
+		PORT = "7070"
 	}
 	router.HandleFunc("/listarPokemon", routers.ListarPokemon).Methods("GET")
 	handler := cors.AllowAll().Handler(router)
